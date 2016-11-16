@@ -54,6 +54,7 @@ public class Philosopher extends Thread {
                 if (Main.nextEating == fork2) {
                     // Eating
                     System.out.println(this.getName() + " is eating...");
+                    Main.gui.setEating(fork2);
                     try {
                         Thread.sleep(1000);
                         System.out.println(this.getName() + " is done eating...");
@@ -66,6 +67,7 @@ public class Philosopher extends Thread {
                 } else {
                     // Thinking
                     System.out.println(this.getName() + " is thinking...");
+                    Main.gui.setThinking(fork2);
                     synchronized (Main.lock) {
                         try {
                             Main.lock.wait();

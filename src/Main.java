@@ -31,22 +31,25 @@
  * Main driver class.
  */
 public class Main {
-    
+
     public static Fork[] forks;
     public static Philosopher[] philosophers;
-    
+
     public static final Object lock = new Object();
     public static boolean locked = false;
     public static volatile int nextEating = 0;
+    public static Visualize gui;
+
+    public static volatile boolean guiStarted = false;
     
     public static void main(String[] args) {
         forks = new Fork[5];
         philosophers = new Philosopher[5];
-        
+
         for (int i = 0; i < forks.length; i++) {
             forks[i] = new Fork(i);
         }
-        
+
         for (int i = 0; i < philosophers.length; i++) {
             switch (i) {
                 case 0:
@@ -66,15 +69,48 @@ public class Main {
                     break;
             }
         }
+        startGUI();
+        while (!guiStarted) {
+            
+        }
         for (Philosopher p : philosophers) {
             p.start();
         }
     }
-    
+
     public static void incNextEating() {
         nextEating++;
         if (nextEating > 4) {
             nextEating = 0;
         }
+    }
+
+    public static void startGUI() {
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Visualize.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Visualize.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Visualize.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Visualize.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                gui = new Visualize();
+                gui.setVisible(true);
+                guiStarted = true;
+            }
+        });
     }
 }
