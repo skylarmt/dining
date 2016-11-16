@@ -35,6 +35,10 @@ public class Main {
     public static Fork[] forks;
     public static Philosopher[] philosophers;
     
+    public static final Object lock = new Object();
+    public static boolean locked = false;
+    public static volatile int nextEating = 0;
+    
     public static void main(String[] args) {
         forks = new Fork[5];
         philosophers = new Philosopher[5];
@@ -64,6 +68,13 @@ public class Main {
         }
         for (Philosopher p : philosophers) {
             p.start();
+        }
+    }
+    
+    public static void incNextEating() {
+        nextEating++;
+        if (nextEating > 4) {
+            nextEating = 0;
         }
     }
 }

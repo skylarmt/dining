@@ -50,14 +50,39 @@ public class Philosopher extends Thread {
     @Override
     public void run() {
         while (true) {
-            synchronized (Main.forks[fork1]) {
+            synchronized (Main.lock) {
+                if (Main.nextEating == fork2) {
+                    // Eating
+                    System.out.println(this.getName() + " is eating...");
+                    try {
+                        Thread.sleep(1000);
+                        System.out.println(this.getName() + " is done eating...");
+                        Main.incNextEating();
+                        synchronized (Main.lock) {
+                            Main.lock.notifyAll();
+                        }
+                    } catch (InterruptedException ex) {
+                    }
+                } else {
+                    // Thinking
+                    System.out.println(this.getName() + " is thinking...");
+                    synchronized (Main.lock) {
+                        try {
+                            Main.lock.wait();
+                        } catch (InterruptedException ex) {
+                        }
+                    }
+                    System.out.println(this.getName() + " is done thinking...");
+                }
+            }
+            /*synchronized (Main.forks[fork1]) {
                 synchronized (Main.forks[fork2]) {
                     if (Main.forks[fork1].getInUse() || Main.forks[fork2].getInUse()) {
                         think();
                     }
                 }
             }
-            eat();
+            eat();*/
         }
     }
 
