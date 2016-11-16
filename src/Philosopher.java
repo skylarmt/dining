@@ -1,3 +1,5 @@
+
+
 /*
  * Copyright (c) 2016, Skylar Ittner, Ricardo Barron-Silva.
  * All rights reserved.
@@ -26,30 +28,37 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
 /**
  *
  * @author skylar
  */
 public class Philosopher extends Thread {
-    
+
     private int fork1 = 0;
     private int fork2 = 0;
-    
+
     public Philosopher(int fork1, int fork2) {
         this.fork1 = fork1;
         this.fork2 = fork2;
+        this.setName("Philosopher " + (fork2 + 1));
     }
-    
+
     private enum state {
         THINKING,
         EATING
     }
-    
+
     @Override
     public void run() {
-        
+
     }
-    
-    
+
+    private void eat() {
+        System.out.println(this.getName() + " is eating...");
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+        }
+    }
+
 }
