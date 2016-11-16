@@ -1,5 +1,4 @@
 
-
 /*
  * Copyright (c) 2016, Skylar Ittner, Ricardo Barron-Silva.
  * All rights reserved.
@@ -50,14 +49,51 @@ public class Philosopher extends Thread {
 
     @Override
     public void run() {
+        while (true) {
+            synchronized (Main.forks[fork1]) {
+                synchronized (Main.forks[fork2]) {
+                    if (Main.forks[fork1].getInUse() || Main.forks[fork2].getInUse()) {
+                        think();
+                    }
+                }
+            }
+            eat();
+        }
+    }
 
+    private void think() {
+        System.out.println(this.getName() + " is thinking...");
+        try {
+            synchronized (Main.forks[fork1]) {
+                Main.forks[fork1].wait(1000);
+            }
+            synchronized (Main.forks[fork2]) {
+                Main.forks[fork2].wait(1000);
+            }
+        } catch (InterruptedException ex) {
+
+        }
     }
 
     private void eat() {
         System.out.println(this.getName() + " is eating...");
+        synchronized (Main.forks[fork1]) {
+            Main.forks[fork1].setInUse(true);
+        }
+        synchronized (Main.forks[fork2]) {
+            Main.forks[fork2].setInUse(true);
+        }
         try {
             Thread.sleep(1000);
         } catch (InterruptedException ex) {
+        }
+        synchronized (Main.forks[fork1]) {
+            Main.forks[fork1].setInUse(false);
+            Main.forks[fork1].notifyAll();
+        }
+        synchronized (Main.forks[fork2]) {
+            Main.forks[fork2].setInUse(false);
+            Main.forks[fork2].notifyAll();
         }
     }
 

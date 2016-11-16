@@ -34,7 +34,17 @@
 public class Fork {
     public int forkID = 0;
     
+    private boolean inUse = false;
+    
     public Fork(int id) {
         forkID = id;
+    }
+    
+    public boolean getInUse() {
+        return inUse;
+    }
+    
+    public void setInUse(boolean using) {
+        inUse = using;
     }
 }

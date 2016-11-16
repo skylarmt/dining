@@ -62,5 +62,8 @@ public class Main {
                     break;
             }
         }
+        for (Philosopher p : philosophers) {
+            p.start();
+        }
     }
 }
