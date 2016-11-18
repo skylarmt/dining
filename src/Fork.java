@@ -28,8 +28,7 @@
  */
 
 /**
- *
- * @author skylar
+ * A fork.  Pretty self-explanatory.
  */
 public class Fork {
     public int forkID = 0;
