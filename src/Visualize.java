@@ -31,16 +31,13 @@ import javax.swing.SwingUtilities;
  * POSSIBILITY OF SUCH DAMAGE.
  */
 /**
- *
- * @author skylar
+ * Visualizes the running code nicely
  */
 public class Visualize extends javax.swing.JFrame {
 
+    // All the philosophers
     JLabel[] philos = new JLabel[5];
-
-    /**
-     * Creates new form Visualize
-     */
+    
     public Visualize() {
         initComponents();
         for (int i = 0; i < philos.length; i++) {
@@ -50,6 +47,10 @@ public class Visualize extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Set a philosopher to eating
+     * @param p The philosopher ID
+     */
     public void setEating(int p) {
         SwingUtilities.invokeLater(() -> {
             philos[p].setText(philos[p].getText().replace("color='black'", "color='green'"));
@@ -57,6 +58,10 @@ public class Visualize extends javax.swing.JFrame {
         });
     }
 
+    /**
+     * Set a philosopher to thinking
+     * @param p The philosopher ID
+     */
     public void setThinking(int p) {
         SwingUtilities.invokeLater(() -> {
             philos[p].setText(philos[p].getText().replace("color='black'", "color='red'"));
