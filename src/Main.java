@@ -46,10 +46,12 @@ public class Main {
         forks = new Fork[5];
         philosophers = new Philosopher[5];
 
+        // Create the forks
         for (int i = 0; i < forks.length; i++) {
             forks[i] = new Fork(i);
         }
 
+        // Create the philosophers
         for (int i = 0; i < philosophers.length; i++) {
             switch (i) {
                 case 0:
@@ -69,15 +71,21 @@ public class Main {
                     break;
             }
         }
+        // Start the GUI
         startGUI();
+        // Wait for it to start
         while (!guiStarted) {
             
         }
+        // Now start the philosophers
         for (Philosopher p : philosophers) {
             p.start();
         }
     }
 
+    /**
+     * Set the currently dining philosopher to the next one
+     */
     public static void incNextEating() {
         nextEating++;
         if (nextEating > 4) {
@@ -85,6 +93,9 @@ public class Main {
         }
     }
 
+    /**
+     * Start the GUI for visualizing.
+     */
     public static void startGUI() {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
