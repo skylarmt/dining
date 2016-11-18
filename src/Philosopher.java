@@ -33,7 +33,9 @@
  */
 public class Philosopher extends Thread {
 
+    // The two forks we're assigned
     private int fork1 = 0;
+    // This one is also used as the ID for this thread (see Main for why this works)
     private int fork2 = 0;
 
     public Philosopher(int fork1, int fork2) {
@@ -51,16 +53,17 @@ public class Philosopher extends Thread {
     public void run() {
         while (true) {
             synchronized (Main.lock) {
+                // If we're allowed to eat
                 if (Main.nextEating == fork2) {
                     // Eating
                     System.out.println(this.getName() + " is eating...");
-                    Main.gui.setEating(fork2);
+                    Main.gui.setEating(fork2);  // Update GUI
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(1000); // Eat for a little while
                         System.out.println(this.getName() + " is done eating...");
-                        Main.incNextEating();
+                        Main.incNextEating(); // Allow the next guy to eat
                         synchronized (Main.lock) {
-                            Main.lock.notifyAll();
+                            Main.lock.notifyAll(); // Notify everyone that the next guy is eating
                         }
                     } catch (InterruptedException ex) {
                     }
@@ -70,7 +73,7 @@ public class Philosopher extends Thread {
                     Main.gui.setThinking(fork2);
                     synchronized (Main.lock) {
                         try {
-                            Main.lock.wait();
+                            Main.lock.wait(); // Wait until something changes
                         } catch (InterruptedException ex) {
                         }
                     }
@@ -88,6 +91,7 @@ public class Philosopher extends Thread {
         }
     }
 
+    // We didn't use this for some reason
     private void think() {
         System.out.println(this.getName() + " is thinking...");
         try {
@@ -102,6 +106,7 @@ public class Philosopher extends Thread {
         }
     }
 
+    // We didn't use this for some reason
     private void eat() {
         System.out.println(this.getName() + " is eating...");
         synchronized (Main.forks[fork1]) {
