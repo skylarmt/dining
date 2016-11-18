@@ -53,8 +53,8 @@ public class Visualize extends javax.swing.JFrame {
      */
     public void setEating(int p) {
         SwingUtilities.invokeLater(() -> {
-            philos[p].setText(philos[p].getText().replace("color='black'", "color='green'"));
-            philos[p].setText(philos[p].getText().replace("color='red'", "color='green'"));
+            philos[p].setText(philos[p].getText().replace("color='black'", "color='blue'"));
+            philos[p].setText(philos[p].getText().replace("color='red'", "color='blue'"));
         });
     }
 
@@ -65,7 +65,7 @@ public class Visualize extends javax.swing.JFrame {
     public void setThinking(int p) {
         SwingUtilities.invokeLater(() -> {
             philos[p].setText(philos[p].getText().replace("color='black'", "color='red'"));
-            philos[p].setText(philos[p].getText().replace("color='green'", "color='red'"));
+            philos[p].setText(philos[p].getText().replace("color='blue'", "color='red'"));
         });
     }
 
